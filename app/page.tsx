@@ -73,20 +73,13 @@ const item: Variants = {
 const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const formatKg = (value: number) => `${value.toFixed(1)} kg`;
 const formatKcal = (value: number) => `${Math.round(value).toLocaleString()} kcal`;
-const genderDefaults: Record<
-  Gender,
-  { weight: number; age: number; height: number; activity: ActivityLevel }
-> = {
-  male: { weight: 81, age: 44, height: 178, activity: "light" },
-  female: { weight: 64, age: 43, height: 167, activity: "light" }
-};
 
 export default function Home() {
   const [gender, setGender] = useState<Gender>("male");
-  const [weight, setWeight] = useState(genderDefaults.male.weight);
-  const [age, setAge] = useState(genderDefaults.male.age);
-  const [height, setHeight] = useState(genderDefaults.male.height);
-  const [activity, setActivity] = useState<ActivityLevel>(genderDefaults.male.activity);
+  const [weight, setWeight] = useState(80);
+  const [age, setAge] = useState(35);
+  const [height, setHeight] = useState(175);
+  const [activity, setActivity] = useState<ActivityLevel>("light");
   const [currentBodyFat, setCurrentBodyFat] = useState(22);
   const [targetBodyFat, setTargetBodyFat] = useState(12);
   const [weeklyLossTarget, setWeeklyLossTarget] = useState(1);
@@ -143,12 +136,7 @@ export default function Home() {
     : null;
 
   function updateGender(nextGender: Gender) {
-    const defaults = genderDefaults[nextGender];
     setGender(nextGender);
-    setWeight(defaults.weight);
-    setAge(defaults.age);
-    setHeight(defaults.height);
-    setActivity(defaults.activity);
     setCurrentBodyFat((value) => clampBodyFat(nextGender, value));
     setTargetBodyFat((value) => clampBodyFat(nextGender, value));
   }
